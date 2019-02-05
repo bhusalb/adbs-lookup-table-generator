@@ -52,8 +52,6 @@ while loop_date < end_date:
         page = BeautifulSoup(res.content, features="html.parser")
 
         date_div = page.select('.unicode_wrap .inner')[1]
-
-        print(date_div.text[5:10], date_div.text.split(' '))
         parts = date_div.text.split(' ')
         year = parts[0][5:]
         month = parts[1]
@@ -68,6 +66,8 @@ while loop_date < end_date:
     except:
         complete_date = ''
 
+    row = ','.join([loop_date.format('YYYY-MM-DD'), complete_date])
+    print(row)
     with open('dates.csv', 'a') as datefile:
-        datefile.write(','.join([loop_date.format('YYYY-MM-DD'), complete_date]) + '\n')
+        datefile.write(row + '\n')
     loop_date = loop_date.shift(days=1)
